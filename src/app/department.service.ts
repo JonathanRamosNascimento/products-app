@@ -22,7 +22,11 @@ export class DepartmentService {
   }
   
   addDepartment(d: Department) {
-    this.departments.push({...d, id: this.nextID++});
+    this.departments.push({id: this.nextID++,...d});
     console.log(this.departments);
+  }
+
+  getDepartmentById(id: number): Department {
+    return this.departments.find((d) => d.id == id);
   }
 }
