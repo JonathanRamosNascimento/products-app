@@ -1,6 +1,6 @@
 import { DepartmentService } from './department.service';
 import { Product } from './models/product.model';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,7 @@ export class ProductService {
 
   private products: Product[] = [];
   private nextID: number;
+  onNewProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
   constructor(private departmentService: DepartmentService) {
     for(let p of this.dataFromServer){
@@ -35,8 +36,10 @@ export class ProductService {
   }
 
   addProduct(p: Product) {
-    this.products.push({id: this.nextID++, ...p});
+    let prod: Product = {id: this.nextID++, ...p};
+    this.products.push(prod);
     console.log(this.products);
+    this.onNewProduct.emit(prod);
   }
 
 }
