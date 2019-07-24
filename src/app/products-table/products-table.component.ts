@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../product.service';
+import { Product } from '../models/product.model';
 
 @Component({
   selector: 'app-products-table',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsTableComponent implements OnInit {
 
-  constructor() { }
+  products: Product[];
+
+  prodColumns: string[] = ['id', 'name', 'price', 'description', 'department'];
+
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
+    this.products = this.productService.getProducts();
   }
 
 }
